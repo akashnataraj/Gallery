@@ -1,0 +1,32 @@
+﻿@model Gallery.Models.LoginViewModel
+
+@{
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+<p class="login-card-description">Sign into your account</p>
+<form asp-action="Login">
+    @Html.ValidationMessage("customError", new { @class = "text-danger" })
+    <div class="form-group">
+        <label asp-for="Email" class="sr-only"></label>
+        <input placeholder="Email" asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Password" class="sr-only"></label>
+        <input placeholder="Password" asp-for="Password" class="form-control" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+    <div class="form-group form-check">
+        <label class="form-check-label">
+            <input class="form-check-input" asp-for="RememberMe" /> @Html.DisplayNameFor(model => model.RememberMe)
+        </label>
+    </div>
+    <input type="submit" value="Login" class="btn btn-block login-btn mb-4" />
+</form>
+<p class="login-card-footer-text">Don't have an account? <a asp-controller="Account" asp-action="Register">Register here</a></p>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

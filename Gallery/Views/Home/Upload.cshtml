@@ -1,0 +1,53 @@
+﻿@model Gallery.Models.UploadViewModel
+<head>
+    <title>Gallery</title>
+    <style>
+        .center {
+            position: fixed;
+            top: 35%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+<h3 class="text-center mt-5">Upload image</h3>
+<div class="container center">
+    <form method="post" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-5">
+                <ul>
+                    <li>Max size: 3mb</li>
+                    <li>Allowed formats: jpeg, png</li>
+                </ul>
+                @Html.ValidationMessage("customError", new { @class = "text-danger" })
+                @Html.ValidationMessage("uploadSuccess", new { @class = "text-success" })
+            </div>
+            <div class="col-2"></div>
+        </div>
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-5 mt-2">
+                <div class="custom-file">
+                    <input asp-for="Image" class="custom-file-input" id="customFile">
+                    <label class="custom-file-label" for="customFile">Choose Image</label>
+                </div>
+            </div>
+            <div class="col-2 text-center mt-2">
+                <input type="submit" class="btn btn-primary" value="Upload file" name="submit">
+            </div>
+        </div>
+    </form>
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
+</div>
+
+
+<script>
+    $(".custom-file-input").on("change", function () {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+</script>
+

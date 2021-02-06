@@ -1,0 +1,77 @@
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/css/Main.css" rel="stylesheet" />
+    <style>
+    </style>
+</head>
+@if (SignInManager.IsSignedIn(User))
+{
+<body>
+    <header>
+        <nav class="navbar navbar-expand-md navbar-dark">
+            <div class="navbar-collapse dual-collapse2">
+                <h4 class="ml-2 navbar-brand navbar-nav mr-auto">Image Gallery</h4>
+            </div>
+            <div class="navbar-collapse dual-collapse2">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a id="upload-link" asp-controller="Home" asp-action="Upload" class="nav-link">Upload</a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="gallery-link" asp-controller="Home" asp-action="Gallery" class="nav-link">Gallery</a>
+                    </li>
+                    <li class="dropdown nav-item">
+                        <a class="nav-link" href="">@UserManager.GetUserName(User)</a>
+                        <div class="dropdown-content">
+                            <a asp-controller="Account" asp-action="Logout">Sign Out</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div class="">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <div style="position: fixed; bottom: 0; height: 5%; width: 100%; text-align: center; background-color:#c4c4c4">
+        <footer class="border-top footer text-muted">
+            <div class="container" style="color:black">
+                &copy; 2021 - Gallery - Privacy>
+            </div>
+        </footer>
+    </div>
+
+    
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+}
+</html>
+<script>
+    $(document).ready(function () {
+        if (window.location.pathname == "/Home/Upload") {
+            $('#upload-link').addClass('active');
+            $('#gallery-link').removeClass('active');
+        }
+        else {
+            $('#upload-link').removeClass('active');
+            $('#gallery-link').addClass('active');
+        }
+    });
+</script>
